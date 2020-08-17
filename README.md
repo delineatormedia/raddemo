@@ -1,4 +1,4 @@
-# raddemo
+# radDemo
 radDemo is a tool for creating controllable presentations from video files.
 
 radDemo is at version 0.2.0 and is still in alpha. Don't use in production yet unless you know what you are doing and
@@ -7,7 +7,6 @@ love to tinker.
 ## Instructions
 
 1. Run `npm install`.
-2. Add your video file and timecode info to demo.js.
 3. Run `rollup -c rollup.config.js` to build.
 
 radDemo can be used as a library or as an ES6 module. To use it as a library, refer to `demo-library.html` and
