@@ -1,7 +1,7 @@
 import keyboard from 'keyboardjs';
-import {videoTag} from './components/videoTag.js'
-import {videoControls} from './components/videoControls.js'
-import {settingsUI} from './components/settingsUI';
+import {videoTag} from './videoTag.js'
+import {videoControls} from './videoControls.js'
+import {settingsUI} from './settingsUI';
 
 export default class RadDemo {
     /**
@@ -178,12 +178,14 @@ export default class RadDemo {
         }
         this.loadPlaylistItem( this.state.currentPlaylistItem );
 
+        this.keyboard = keyboard;
+
         // Setup keyboard controls
-        keyboard.bind('space', ()=>{this.toggle()});
+        this.keyboard.bind('space', ()=>{this.toggle()});
 
-        keyboard.bind('left', ()=>{this.prev()});
+        this.keyboard.bind('left', ()=>{this.prev()});
 
-        keyboard.bind('right', ()=>{this.next()});
+        this.keyboard.bind('right', ()=>{this.next()});
     }
 
     /**

@@ -1,5 +1,3 @@
-import RadDemo from './raddemo.js'
-
 const props = {
     container: '#raddemo',
     interval: 100,
@@ -22,4 +20,4 @@ const props = {
     ]
 }
 
-let mydemo = new RadDemo(props);
+const myRadDemo = radDemo(props);

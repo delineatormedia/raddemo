@@ -1,11 +1,20 @@
 # raddemo
-RadDemo is a tool for creating controllable presentations from video files.
+radDemo is a tool for creating controllable presentations from video files.
 
-RadDemo is at version 0.1.0 and is still in alpha. Don't use in production yet unless you know what you are doing and love to tinker.
+radDemo is at version 0.2.0 and is still in alpha. Don't use in production yet unless you know what you are doing and
+love to tinker.
 
 ## Instructions
 
 1. Run `npm install`.
-2. Run `webpack` to build.
-3. Add your [FontAwesome](https://github.com/FortAwesome/Font-Awesome) kit link in the head of demo.html, or add FA by other means.
-4. Add your video file and timecode info to demo.js.
+2. Add your video file and timecode info to demo.js.
+3. Run `rollup -c rollup.config.js` to build.
+
+radDemo can be used as a library or as an ES6 module. To use it as a library, refer to `demo-library.html` and
+`demo-library.js` for a usage example. To use it as an ES6 module, refer to `demo-module.html` and `demo-module.js` for
+a usage example.
+
+## Thanks
+
+- Video UI icons from [FontAwesome](https://github.com/FortAwesome/Font-Awesome).
+- Keyboard controls from [KeyboardJS](https://github.com/RobertWHurst/KeyboardJS).
