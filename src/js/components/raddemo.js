@@ -251,15 +251,26 @@ export default class RadDemo {
         else {
             console.log('radDemo: ! currentTime >= prevTime');
             this.pause();
-            // For every pause point
-            for(let i=0; i<pausePoints.length; i++) {
-                // If the current time falls within a narrow window of this pause point
-                if(currentTime > (pausePoints[i] - 0.15) && currentTime < (pausePoints[i] + 0.15) ) {
-                    console.log('radDemo: hit a prev pausePoint');
-                    this.state.pausePointCurrent = pausePoints[i];
-                    this.state.pausePointPrev = (i-1) >= 0 ? pausePoints[i] : 0;
+
+            console.log(currentTime);
+
+            if(currentTime > 0) {
+                // For every pause point
+                for(let i=0; i<pausePoints.length; i++) {
+                    // If the current time falls within a narrow window of this pause point
+                    if(currentTime > (pausePoints[i] - 0.15) && currentTime < (pausePoints[i] + 0.15) ) {
+                        console.log('radDemo: hit a prev pausePoint');
+                        this.state.pausePointPrev = this.state.pausePointCurrent;
+                        this.state.pausePointCurrent = pausePoints[i];
+                    }
                 }
             }
+            else {
+                this.state.pausePointPrev = this.state.pausePointCurrent;
+                this.state.pausePointCurrent = 0;
+            }
+
+
         }
     }
 
