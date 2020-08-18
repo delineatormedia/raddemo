@@ -456,8 +456,4 @@ export default class RadDemo {
     }
 }
 
-/* TODO: Autoplay next chapter doesn't autoplay */
-
 /* TODO: toggle() method fails when at start of new chapter (having arrived at new chapter via next chapter button), reverts back to previous chapter */
-
-/* TODO: Add sizing handling for the demo so it doesn't drift offscreen. CSS, but may need to use JS to accommodate different video sizes. */
