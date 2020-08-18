@@ -195,12 +195,12 @@ export default class RadDemo {
         console.log('radDemo: timecodeUpdate');
 
         // Update previous timecode and current timecode
-        this.state.timecodePrev = this.state.timecodeCurrent;
-        this.state.timecodeCurrent = this.media.currentTime;
+        this.state.timecodePrev = this.roundTime( this.state.timecodeCurrent );
+        this.state.timecodeCurrent = this.roundTime( this.media.currentTime );
 
         // Storing values as shorter to reference constants
         const prevTime = this.state.timecodePrev;
-        const currentTime = this.media.currentTime;
+        const currentTime = this.roundTime( this.media.currentTime );
         const pausePoints = this.playlist[ this.state.currentPlaylistItem ].pausePoints;
 
         // Update the UI timecode and timeline (these need to happen regardless of outcome)
@@ -210,7 +210,10 @@ export default class RadDemo {
         console.log('radDemo: currentTime: ' + currentTime + ', prevTime: ' + prevTime);
 
         // If the timecode is higher than the previous (moving forwards)
-        if(currentTime > prevTime) {
+        if(currentTime >= prevTime) {
+
+            console.log('radDemo: currentTime >= prevTime');
+
             // If the media is playing
             if(!this.media.paused) {
 
@@ -220,7 +223,7 @@ export default class RadDemo {
                 for(let i=0; i<pausePoints.length; i++) {
 
                     // If we have gained some safe distance from the previous pause point
-                    if(currentTime > (this.state.pausePointPrev + 0.3)) {
+                    if(currentTime > (this.state.pausePointCurrent + 0.3)) {
                         // If the current time falls within a narrow window of this pause point
                         if(currentTime > (pausePoints[i] - 0.15) && currentTime < (pausePoints[i] + 0.15) ) {
                             console.log('radDemo: hit pausePoint: ' + pausePoints[i]);
@@ -258,6 +261,15 @@ export default class RadDemo {
                 }
             }
         }
+    }
+
+    /**
+     * Rounds time in seconds to two decimal places.
+     * @param {number} time
+     * @returns {number}
+     */
+    roundTime(time){
+        return Math.round(time * 100) / 100;
     }
 
     /**
@@ -323,6 +335,9 @@ export default class RadDemo {
 
         this.loadPlaylistItem( nextPlaylistItem );
 
+        this.state.timecodePrev = 0;
+        this.state.timecodeCurrent = 0;
+
         if(this.state.autoplayNextChapter) {
             this.playFromBeginning();
         }
@@ -384,7 +399,12 @@ export default class RadDemo {
         let nextPausePoint = 0;
 
         for(let i=0; i<pausePoints.length; i++) {
-            if( currentTime < (pausePoints[i] - 0.15) ) {
+
+            console.log('radDemo: scanning pausePoints ... ' + pausePoints[i]);
+
+            if( currentTime < (pausePoints[i] - 0.15) && this.state.pausePointCurrent !== pausePoints[i] ) {
+                console.log('radDemo: currentTime('+currentTime+') is less than pausePoint('+pausePoints[i]+')');
+                console.log('radDemo: Found the next pausePoint');
                 nextPausePoint = pausePoints[i];
                 if(this.state.autoplayNextPausePoint) this.media.dataset.autoplay = 'true';
                 this.media.currentTime = nextPausePoint - 0.15;
