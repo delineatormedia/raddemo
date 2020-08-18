@@ -1,6 +1,7 @@
 import nodeResolve from 'rollup-plugin-node-resolve'
 import {terser} from 'rollup-plugin-terser'
 import scss from 'rollup-plugin-scss'
+import strip from '@rollup/plugin-strip';
 
 export default [
     {
@@ -17,19 +18,17 @@ export default [
                 compact: true,
                 name: 'radDemo',
                 plugins: [
-                    terser(),
-                    scss({
-                        output: 'dist/raddemo.min.css',
-                        outputStyle: "compressed",
-                    })
+                    terser()
                 ]
             }
         ],
         plugins: [
             nodeResolve(),
             scss({
+                output: 'dist/raddemo.min.css',
                 outputStyle: "compressed",
-            })
+            }),
+            strip()
         ]
     },
     {
@@ -42,15 +41,43 @@ export default [
                 file: 'dist/raddemo.module.min.js',
                 compact: true,
                 plugins: [
-                    terser()
+                    terser(),
                 ]
             }
         ],
         plugins: [
             nodeResolve(),
+            strip()
+        ]
+    },
+    {
+        input: 'src/js/index.js',
+        output: [
+            {
+                file: 'dist/debug/raddemo.library.dev.js',
+                format: 'iife',
+                name: 'radDemo',
+            }
+        ],
+        plugins: [
+            nodeResolve(),
             scss({
-                outputStyle: "compressed",
+                output: 'dist/raddemo.css'
             })
         ]
-    }
+    },
+    {
+        input: 'src/js/components/raddemo.js',
+        output: [
+            {
+                file: 'dist/debug/raddemo.module.dev.js',
+            }
+        ],
+        plugins: [
+            nodeResolve(),
+            scss({
+                output: false
+            })
+        ]
+    },
 ]

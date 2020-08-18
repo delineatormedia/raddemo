@@ -1,30 +1,28 @@
 {
-  "name": "raddemo-reborn",
-  "version": "1.0.0",
-  "description": "",
+  "name": "raddemo",
+  "version": "0.2.0",
+  "description": "radDemo is a tool for creating controllable presentations from video files.",
   "main": "index.js",
+  "repository": "https://github.com/delineatormedia/raddemo",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "watch": "webpack --watch"
+    "build": "rollup -c rollup.config.js",
+    "watch": "rollup -c rollup.config.js --watch"
   },
   "keywords": [],
-  "author": "",
+  "author": "Stephen DeLorme",
   "license": "ISC",
   "devDependencies": {
-    "autoprefixer": "^9.8.4",
-    "css-loader": "^3.6.0",
+    "@rollup/plugin-strip": "^2.0.0",
     "extract-loader": "^5.1.0",
-    "file-loader": "^6.0.0",
     "keyboardjs": "^2.6.3",
-    "mini-css-extract-plugin": "^0.9.0",
     "postcss": "^7.0.32",
     "postcss-loader": "^3.0.0",
     "rollup": "^2.25.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-scss": "^2.5.0",
     "rollup-plugin-terser": "^7.0.0",
-    "sass": "^1.26.9",
+    "sass": "^1.26.9"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0"

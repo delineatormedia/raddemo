@@ -192,6 +192,8 @@ export default class RadDemo {
      * Code that needs to run every time the demo's timecode changes, like checking for pause points.
      */
     timecodeUpdate(){
+        console.log('radDemo: timecodeUpdate');
+
         // Update previous timecode and current timecode
         this.state.timecodePrev = this.state.timecodeCurrent;
         this.state.timecodeCurrent = this.media.currentTime;
@@ -205,17 +207,24 @@ export default class RadDemo {
         this.timecode.innerHTML = currentTime;
         this.timelineFill.style.width = ((currentTime/this.media.duration)*100)+'%';
 
+        console.log('radDemo: currentTime: ' + currentTime + ', prevTime: ' + prevTime);
+
         // If the timecode is higher than the previous (moving forwards)
         if(currentTime > prevTime) {
             // If the media is playing
             if(!this.media.paused) {
 
+                console.log ('safe timecode distance: ' + (this.state.pausePointCurrent + 0.3));
+
                 // For every pause point
                 for(let i=0; i<pausePoints.length; i++) {
+
                     // If we have gained some safe distance from the previous pause point
                     if(currentTime > (this.state.pausePointPrev + 0.3)) {
                         // If the current time falls within a narrow window of this pause point
                         if(currentTime > (pausePoints[i] - 0.15) && currentTime < (pausePoints[i] + 0.15) ) {
+                            console.log('radDemo: hit pausePoint: ' + pausePoints[i]);
+
                             // If the media is supposed to autoplay from the next pause point ( e.g. when using next() )
                             if(this.media.dataset.autoplay === 'true') {
                                 this.play();
@@ -228,6 +237,8 @@ export default class RadDemo {
                             // Update the previous and current pause point values
                             this.state.pausePointPrev = this.state.pausePointCurrent;
                             this.state.pausePointCurrent = pausePoints[i];
+                            console.log('radDemo: this.state.pausePointPrev: ' + this.state.pausePointPrev);
+                            console.log('radDemo: this.state.pausePointCurrent ' + this.state.pausePointCurrent);
                         }
                     }
                 }
@@ -235,11 +246,13 @@ export default class RadDemo {
         }
         // Else, moving backwards
         else {
+            console.log('radDemo: ! currentTime >= prevTime');
             this.pause();
             // For every pause point
             for(let i=0; i<pausePoints.length; i++) {
                 // If the current time falls within a narrow window of this pause point
                 if(currentTime > (pausePoints[i] - 0.15) && currentTime < (pausePoints[i] + 0.15) ) {
+                    console.log('radDemo: hit a prev pausePoint');
                     this.state.pausePointCurrent = pausePoints[i];
                     this.state.pausePointPrev = (i-1) >= 0 ? pausePoints[i] : 0;
                 }
@@ -330,6 +343,7 @@ export default class RadDemo {
      * Plays the demo from current timecode
      */
     play() {
+        console.log('radDemo: play()');
         this.media.play();
         this.btnPlayPause.classList.add('play');
         this.btnPlayPause.classList.remove('pause');
@@ -340,12 +354,14 @@ export default class RadDemo {
      * Pauses the demo
      */
     pause() {
+        console.log('radDemo: pause()');
         this.media.pause();
         this.btnPlayPause.classList.add('pause');
         this.btnPlayPause.classList.remove('play');
     }
 
     toggle() {
+        console.log('radDemo: toggle()');
         if(this.media.paused) {
             this.play();
         } else {
@@ -357,6 +373,8 @@ export default class RadDemo {
      * Skips to the next pause point in the demo
      */
     next() {
+        console.log('radDemo: next()');
+
         if(this.media.paused) this.media.play();
 
         const currentTime = this.media.currentTime;
@@ -381,6 +399,7 @@ export default class RadDemo {
      * Skips back to the previous pause point in the demo
      */
     prev() {
+        console.log('radDemo: prev()');
         const currentTime = this.media.currentTime;
 
         let pausePoints = this.playlist[ this.state.currentPlaylistItem ].pausePoints.slice().reverse();
