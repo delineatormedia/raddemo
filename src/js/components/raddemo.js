@@ -367,7 +367,7 @@ export default class RadDemo {
 
         for(let i=0; i<pausePoints.length; i++) {
             if( currentTime < (pausePoints[i] - 0.15) ) {
-                nextPausePoint = parseInt(pausePoints[i]);
+                nextPausePoint = pausePoints[i];
                 if(this.state.autoplayNextPausePoint) this.media.dataset.autoplay = 'true';
                 this.media.currentTime = nextPausePoint - 0.15;
                 break;
@@ -389,7 +389,7 @@ export default class RadDemo {
 
         for(let i=0; i<pausePoints.length; i++) {
             if( currentTime > (pausePoints[i] + 0.15) ) {
-                prevPausePoint = parseInt(pausePoints[i]);
+                prevPausePoint = pausePoints[i];
                 break;
             }
         }
