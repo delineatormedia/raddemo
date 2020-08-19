@@ -455,5 +455,3 @@ export default class RadDemo {
         this.settings.classList.add('hidden');
     }
 }
-
-/* TODO: toggle() method fails when at start of new chapter (having arrived at new chapter via next chapter button), reverts back to previous chapter */
