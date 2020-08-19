@@ -18,9 +18,9 @@ export default class RadDemo {
             timecodePrev: 0,
             pausePointPrev: 0,
             pausePointCurrent: 0,
-            autoplayNextPausePoint: sessionStorage.autoPlayNextPausePoint ? sessionStorage.autoPlayNextPausePoint === 'true' : props.autoplayNextPausePoint,
+            autoplayNextPausePoint: sessionStorage.autoPlayNextPausePoint ? sessionStorage.autoPlayNextPausePoint === 'true' : typeof props.autoplayNextPausePoint === 'boolean' ? props.autoplayNextPausePoint : true,
             autoplayPrevPausePoint: props.autoplayPrevPausePoint,
-            autoplayNextChapter: sessionStorage.autoPlayNextChapter ? sessionStorage.autoPlayNextChapter === 'true' : props.autoplayNextChapter,
+            autoplayNextChapter: sessionStorage.autoPlayNextChapter ? sessionStorage.autoPlayNextChapter === 'true' : typeof props.autoplayNextChapter === 'boolean' ? props.autoplayNextChapter : true,
             playCount: 0
         };
 
