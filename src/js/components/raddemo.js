@@ -85,12 +85,7 @@ export default class RadDemo {
         });
 
         this.btnPlayPause.addEventListener('click', (e)=>{
-            if(this.media.paused) {
-                this.playFromBeginning();
-            }
-            else {
-                this.pause();
-            }
+            this.toggle();
         });
 
         this.btnNext.addEventListener('click', (e)=>{
@@ -101,21 +96,9 @@ export default class RadDemo {
             this.prev();
         });
 
-        this.btnPlayPauselistNext.addEventListener('click', (e)=>{
-            let nextPlaylistItem = this.state.currentPlaylistItem + 1;
+        this.btnPlayPauselistNext.addEventListener('click', (e)=>{ this.nextPlaylistItem() });
 
-            if(nextPlaylistItem+1 > this.playlist.length) nextPlaylistItem = 0;
-
-            this.loadPlaylistItem( nextPlaylistItem );
-        });
-
-        this.btnPlayPauselistPrev.addEventListener('click', (e)=>{
-            let prevPlaylistItem = this.state.currentPlaylistItem - 1;
-
-            if(prevPlaylistItem < 0) prevPlaylistItem = this.playlist.length - 1;
-
-            this.loadPlaylistItem( prevPlaylistItem );
-        });
+        this.btnPlayPauselistPrev.addEventListener('click', (e)=>{ this.prevPlaylistItem() });
 
         this.btnSettings.addEventListener('click', e => {
             this.showSettings();
@@ -186,6 +169,10 @@ export default class RadDemo {
         this.keyboard.bind('left', ()=>{this.prev()});
 
         this.keyboard.bind('right', ()=>{this.next()});
+
+        this.keyboard.bind('shift > left', ()=>{this.prevPlaylistItem()});
+
+        this.keyboard.bind('shift > right', ()=>{this.nextPlaylistItem()});
 
         this.keyboard.bind('s', ()=>{this.showSettings()});
     }
@@ -327,7 +314,8 @@ export default class RadDemo {
         this.timelineFill.style.width = '0%';
         this.btnPlayPause.classList.add('pause');
         this.btnPlayPause.classList.remove('play');
-
+        this.state.timecodePrev = 0;
+        this.state.timecodeCurrent = 0;
         this.media.setAttribute('src', this.playlist[this.state.currentPlaylistItem].videoSource);
     }
 
@@ -349,29 +337,37 @@ export default class RadDemo {
     }
 
     nextPlaylistItem() {
+        console.log('radDemo: nextPlaylistItem()');
+
         let nextPlaylistItem = this.state.currentPlaylistItem + 1;
 
         if(nextPlaylistItem+1 > this.playlist.length) nextPlaylistItem = 0;
 
         this.loadPlaylistItem( nextPlaylistItem );
 
-        this.state.timecodePrev = 0;
-        this.state.timecodeCurrent = 0;
-
         if(this.state.autoplayNextChapter) {
-            this.playFromBeginning();
+            this.play();
         }
         else {
             this.pause();
         }
     }
 
-    /**
-     * Plays from the beginning of the current demo
-     */
-    playFromBeginning() {
-        this.play();
-        // this.state.pausePointPrev = this.state.pausePointCurrent;
+    prevPlaylistItem() {
+        console.log('radDemo: prevPlaylistItem()');
+
+        let prevPlaylistItem = this.state.currentPlaylistItem - 1;
+
+        if(prevPlaylistItem < 0) prevPlaylistItem = this.playlist.length - 1;
+
+        this.loadPlaylistItem( prevPlaylistItem );
+
+        if(this.state.autoplayNextChapter) {
+            this.play();
+        }
+        else {
+            this.pause();
+        }
     }
 
     /**
@@ -410,7 +406,8 @@ export default class RadDemo {
         console.log('radDemo: toggle()');
         if(this.media.paused) {
             this.play();
-        } else {
+        }
+        else {
             this.pause();
         }
     }
