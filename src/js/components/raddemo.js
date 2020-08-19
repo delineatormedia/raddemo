@@ -203,46 +203,37 @@ export default class RadDemo {
 
             console.log('radDemo: currentTime >= prevTime');
 
-            // If the media is playing
-            // if(!this.media.paused) {
+            console.log ('safe timecode distance: ' + (this.state.pausePointCurrent + 0.3));
 
-                console.log ('safe timecode distance: ' + (this.state.pausePointCurrent + 0.3));
+            // For every pause point
+            for(let i=0; i<pausePoints.length; i++) {
 
-                // For every pause point
-                for(let i=0; i<pausePoints.length; i++) {
+                // If we have gained some safe distance from the previous pause point
+                if(currentTime > (this.state.pausePointCurrent + 0.3)) {
+                    // If the current time falls within a narrow window of this pause point
+                    if(currentTime > (pausePoints[i] - 0.15) && currentTime < (pausePoints[i] + 0.15) ) {
+                        console.log('radDemo: hit pausePoint: ' + pausePoints[i]);
 
-                    // If we have gained some safe distance from the previous pause point
-                    if(currentTime > (this.state.pausePointCurrent + 0.3)) {
-                        // If the current time falls within a narrow window of this pause point
-                        if(currentTime > (pausePoints[i] - 0.15) && currentTime < (pausePoints[i] + 0.15) ) {
-                            console.log('radDemo: hit pausePoint: ' + pausePoints[i]);
+                        this.highlightPausePoint(pausePoints[i]);
 
-                            this.btnPausePoints.forEach(element => {
-                                element.classList.remove('current', 'previous');
-                                if(element.dataset.pausePoint == pausePoints[i]) {
-                                    element.classList.add('current', 'viewed');
-                                }
-                            });
+                        // Update the previous and current pause point values
+                        this.state.pausePointPrev = this.state.pausePointCurrent;
+                        this.state.pausePointCurrent = pausePoints[i];
+                        console.log('radDemo: this.state.pausePointPrev: ' + this.state.pausePointPrev);
+                        console.log('radDemo: this.state.pausePointCurrent ' + this.state.pausePointCurrent);
 
-                            // Update the previous and current pause point values
-                            this.state.pausePointPrev = this.state.pausePointCurrent;
-                            this.state.pausePointCurrent = pausePoints[i];
-                            console.log('radDemo: this.state.pausePointPrev: ' + this.state.pausePointPrev);
-                            console.log('radDemo: this.state.pausePointCurrent ' + this.state.pausePointCurrent);
-
-                            // If the media is supposed to autoplay from the next pause point ( e.g. when using next() )
-                            if(this.media.dataset.autoplay === 'true') {
-                                this.play();
-                                this.media.dataset.autoplay = 'false';
-                            }
-                            // Else, no autoplay, so just pause it
-                            else {
-                                this.pause();
-                            }
+                        // If the media is supposed to autoplay from the next pause point ( e.g. when using next() )
+                        if(this.media.dataset.autoplay === 'true') {
+                            this.play();
+                            this.media.dataset.autoplay = 'false';
+                        }
+                        // Else, no autoplay, so just pause it
+                        else {
+                            this.pause();
                         }
                     }
                 }
-            // }
+            }
         }
         // Else, moving backwards
         else {
@@ -257,8 +248,13 @@ export default class RadDemo {
                     // If the current time falls within a narrow window of this pause point
                     if(currentTime > (pausePoints[i] - 0.15) && currentTime < (pausePoints[i] + 0.15) ) {
                         console.log('radDemo: hit a prev pausePoint');
+
+                        this.highlightPausePoint(pausePoints[i]);
+
                         this.state.pausePointPrev = this.state.pausePointCurrent;
                         this.state.pausePointCurrent = pausePoints[i];
+
+
                     }
                 }
             }
@@ -269,6 +265,15 @@ export default class RadDemo {
 
 
         }
+    }
+
+    highlightPausePoint(pausePoint){
+        this.btnPausePoints.forEach(element => {
+            element.classList.remove('current', 'previous');
+            if(element.dataset.pausePoint == pausePoint) {
+                element.classList.add('current', 'viewed');
+            }
+        });
     }
 
     /**
