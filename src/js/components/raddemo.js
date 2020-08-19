@@ -228,6 +228,13 @@ export default class RadDemo {
                         if(currentTime > (pausePoints[i] - 0.15) && currentTime < (pausePoints[i] + 0.15) ) {
                             console.log('radDemo: hit pausePoint: ' + pausePoints[i]);
 
+                            this.btnPausePoints.forEach(element => {
+                                element.classList.remove('current', 'previous');
+                                if(element.dataset.pausePoint == pausePoints[i]) {
+                                    element.classList.add('current');
+                                }
+                            });
+
                             // If the media is supposed to autoplay from the next pause point ( e.g. when using next() )
                             if(this.media.dataset.autoplay === 'true') {
                                 this.play();
@@ -373,6 +380,17 @@ export default class RadDemo {
         this.media.play();
         this.btnPlayPause.classList.add('play');
         this.btnPlayPause.classList.remove('pause');
+
+        this.btnPausePoints.forEach(element => {
+            if(element.classList.contains('current') || element.classList.contains('previous')) {
+                console.log(element);
+                element.classList.remove('current', 'previous');
+                if(this.state.pausePointCurrent == element.dataset.pausePoint) {
+                    element.classList.add('previous');
+                }
+            }
+        });
+
         this.state.playCount++;
     }
 

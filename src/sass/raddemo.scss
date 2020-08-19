@@ -1,6 +1,8 @@
 $color-link: aqua;
 $color-link-hover: lighten($color-link, 10%);
 
+$color-active: violet;
+
 body,html {
   background: #000;
   margin: 0;
@@ -117,6 +119,15 @@ body,html {
         color: $color-link-hover;
         transition: transform 0.25s, color 0.25s;
         box-shadow: 2px 2px 10px rgba(20,20,20,0.5);
+      }
+
+      &.current {
+        background-color: $color-active;
+        box-shadow: 4px 4px 10px rgba(20,20,20,0.25);
+      }
+
+      &.previous {
+        background-color: lighten($color-active, 10%);
       }
     }
   }
