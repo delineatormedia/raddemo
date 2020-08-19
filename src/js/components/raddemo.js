@@ -186,6 +186,8 @@ export default class RadDemo {
         this.keyboard.bind('left', ()=>{this.prev()});
 
         this.keyboard.bind('right', ()=>{this.next()});
+
+        this.keyboard.bind('s', ()=>{this.showSettings()});
     }
 
     /**
