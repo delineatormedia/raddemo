@@ -204,7 +204,7 @@ export default class RadDemo {
             console.log('radDemo: currentTime >= prevTime');
 
             // If the media is playing
-            if(!this.media.paused) {
+            // if(!this.media.paused) {
 
                 console.log ('safe timecode distance: ' + (this.state.pausePointCurrent + 0.3));
 
@@ -242,7 +242,7 @@ export default class RadDemo {
                         }
                     }
                 }
-            }
+            // }
         }
         // Else, moving backwards
         else {
