@@ -1063,24 +1063,34 @@ class RadDemo {
             this.nextPlaylistItem();
         });
 
-        this.btnPlayPause.addEventListener('click', (e)=>{
+        this.btnPlayPause.addEventListener('click', e => {
             this.toggle();
+            e.target.closest('button').blur();
         });
 
-        this.btnNext.addEventListener('click', (e)=>{
+        this.btnNext.addEventListener('click', e => {
             this.next();
+            e.target.closest('button').blur();
         });
 
-        this.btnPrev.addEventListener('click', (e)=>{
+        this.btnPrev.addEventListener('click', e => {
             this.prev();
+            e.target.closest('button').blur();
         });
 
-        this.btnPlayPauselistNext.addEventListener('click', (e)=>{ this.nextPlaylistItem(); });
+        this.btnPlayPauselistNext.addEventListener('click', e => {
+            this.nextPlaylistItem();
+            e.target.closest('button').blur();
+        });
 
-        this.btnPlayPauselistPrev.addEventListener('click', (e)=>{ this.prevPlaylistItem(); });
+        this.btnPlayPauselistPrev.addEventListener('click', e => {
+            this.prevPlaylistItem();
+            e.target.closest('button').blur();
+        });
 
         this.btnSettings.addEventListener('click', e => {
             this.showSettings();
+            e.target.closest('button').blur();
         });
 
         this.btnSettingsConfirm.addEventListener('click', e => {
@@ -1143,17 +1153,17 @@ class RadDemo {
         this.keyboard = keyboard;
 
         // Setup keyboard controls
-        this.keyboard.bind('space', ()=>{this.toggle();});
+        this.keyboard.bind('space', ()=>{ this.toggle(); });
 
-        this.keyboard.bind('left', ()=>{this.prev();});
+        this.keyboard.bind('left', ()=>{ this.prev(); });
 
-        this.keyboard.bind('right', ()=>{this.next();});
+        this.keyboard.bind('right', ()=>{ this.next(); });
 
-        this.keyboard.bind('shift > left', ()=>{this.prevPlaylistItem();});
+        this.keyboard.bind('shift > left', ()=>{ this.prevPlaylistItem(); });
 
-        this.keyboard.bind('shift > right', ()=>{this.nextPlaylistItem();});
+        this.keyboard.bind('shift > right', ()=>{ this.nextPlaylistItem();});
 
-        this.keyboard.bind('s', ()=>{this.showSettings();});
+        this.keyboard.bind('s', ()=>{ this.showSettings(); });
     }
 
     /**

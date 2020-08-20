@@ -31,7 +31,8 @@ body, html {
   padding: 1rem;
   cursor: pointer; }
   .video-controls button:focus {
-    outline: none; }
+    outline: none;
+    border: 1px solid #33ffff; }
   .video-controls button:hover {
     background: #777; }
   .video-controls button.settings {

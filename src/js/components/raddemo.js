@@ -81,27 +81,45 @@ export default class RadDemo {
         });
 
         this.media.addEventListener('ended', (e)=>{
+            console.log('radDemo: media ended');
             this.nextPlaylistItem();
         });
 
-        this.btnPlayPause.addEventListener('click', (e)=>{
+        this.btnPlayPause.addEventListener('click', e => {
+            console.log('radDemo: btn play/pause');
             this.toggle();
+            e.target.closest('button').blur();
         });
 
-        this.btnNext.addEventListener('click', (e)=>{
+        this.btnNext.addEventListener('click', e => {
+            console.log('radDemo: btn next pausePoint');
             this.next();
+            e.target.closest('button').blur();
         });
 
-        this.btnPrev.addEventListener('click', (e)=>{
+        this.btnPrev.addEventListener('click', e => {
+            console.log('radDemo: btn prev pausePoint');
             this.prev();
+            console.log(e);
+            e.target.closest('button').blur();
         });
 
-        this.btnPlayPauselistNext.addEventListener('click', (e)=>{ this.nextPlaylistItem() });
+        this.btnPlayPauselistNext.addEventListener('click', e => {
+            console.log('radDemo: btn next chapter');
+            this.nextPlaylistItem();
+            e.target.closest('button').blur();
+        });
 
-        this.btnPlayPauselistPrev.addEventListener('click', (e)=>{ this.prevPlaylistItem() });
+        this.btnPlayPauselistPrev.addEventListener('click', e => {
+            console.log('radDemo: btn prev chapter');
+            this.prevPlaylistItem();
+            e.target.closest('button').blur();
+        });
 
         this.btnSettings.addEventListener('click', e => {
+            console.log('radDemo: btn settings');
             this.showSettings();
+            e.target.closest('button').blur();
         });
 
         this.btnSettingsConfirm.addEventListener('click', e => {
@@ -164,17 +182,17 @@ export default class RadDemo {
         this.keyboard = keyboard;
 
         // Setup keyboard controls
-        this.keyboard.bind('space', ()=>{this.toggle()});
+        this.keyboard.bind('space', ()=>{ console.log('radDemo: key space'); this.toggle() });
 
-        this.keyboard.bind('left', ()=>{this.prev()});
+        this.keyboard.bind('left', ()=>{ console.log('radDemo: key left'); this.prev() });
 
-        this.keyboard.bind('right', ()=>{this.next()});
+        this.keyboard.bind('right', ()=>{ console.log('radDemo: key right'); this.next() });
 
-        this.keyboard.bind('shift > left', ()=>{this.prevPlaylistItem()});
+        this.keyboard.bind('shift > left', ()=>{ console.log('radDemo: key shift left'); this.prevPlaylistItem() });
 
-        this.keyboard.bind('shift > right', ()=>{this.nextPlaylistItem()});
+        this.keyboard.bind('shift > right', ()=>{ console.log('radDemo: key shift right'); this.nextPlaylistItem()});
 
-        this.keyboard.bind('s', ()=>{this.showSettings()});
+        this.keyboard.bind('s', ()=>{ console.log('radDemo: key s'); this.showSettings() });
     }
 
     /**
