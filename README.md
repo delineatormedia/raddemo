@@ -1,7 +1,7 @@
 # radDemo
 radDemo is a tool for creating controllable presentations from video files.
 
-radDemo is at version 0.3.0 and is still in alpha. Don't use in production yet unless you know what you are doing and
+radDemo is at version 0.3.1 and is still in alpha. Don't use in production yet unless you know what you are doing and
 love to tinker.
 
 ## Usage Instructions
